@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday ❤️</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+            background: #120817;
+            color: #fff;
+            overflow-x: hidden
+        }
+
+        .page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 30px 18px;
+            overflow: hidden
+        }
+
+        .glow {
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            filter: blur(70px);
+            opacity: .35;
+            pointer-events: none
+        }
+
+        .g1 {
+            background: #ff4f91;
+            top: -100px;
+            left: -80px
+        }
+
+        .g2 {
+            background: #9c5cff;
+            right: -100px;
+            bottom: -80px
+        }
+
+        .card {
+            width: min(900px, 100%);
+            background: rgba(255, 255, 255, .09);
+            border: 1px solid rgba(255, 255, 255, .16);
+            backdrop-filter: blur(14px);
+            border-radius: 30px;
+            padding: clamp(25px, 6vw, 65px);
+            text-align: center;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, .35);
+            z-index: 2
+        }
+
+        .eyebrow {
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #ff9ec3;
+            font-size: .78rem
+        }
+
+        h1 {
+            font-size: clamp(3rem, 10vw, 7rem);
+            line-height: .95;
+            margin: 18px 0
+        }
+
+        h1 span {
+            color: #ff6fa8
+        }
+
+        .subtitle {
+            font-size: clamp(1rem, 3vw, 1.35rem);
+            opacity: .82;
+            max-width: 650px;
+            margin: auto;
+            line-height: 1.7
+        }
+
+        .btn {
+            border: 0;
+            border-radius: 999px;
+            padding: 14px 24px;
+            margin: 25px 7px 0;
+            background: linear-gradient(135deg, #ff4f91, #9f68ff);
+            color: white;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 10px 30px #0005;
+            transition: .25s
+        }
+
+        .btn:hover {
+            transform: translateY(-3px) scale(1.02)
+        }
+
+        .hidden {
+            display: none !important
+        }
+
+        .section {
+            min-height: 100vh;
+            padding: 70px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative
+        }
+
+        .message {
+            font-size: clamp(1.05rem, 2.7vw, 1.35rem);
+            line-height: 1.9;
+            opacity: .9;
+            margin: 25px auto;
+            max-width: 720px
+        }
+
+        .typing {
+            min-height: 110px;
+            color: #ffd1e2
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin: 30px auto;
+            max-width: 700px
+        }
+
+        .photo {
+            aspect-ratio: 1;
+            border-radius: 20px;
+            overflow: hidden;
+            background: #ffffff12;
+            border: 1px dashed #ffffff45;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff88;
+            font-size: .85rem
+        }
+
+        .photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover
+        }
+
+        @media(max-width:600px) {
+            .photo-grid {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .photo:last-child {
+                grid-column: span 2
+            }
+        }
+
+        .timeline {
+            max-width: 650px;
+            margin: 25px auto;
+            text-align: left
+        }
+
+        .memory {
+            padding: 18px 20px;
+            margin: 13px 0;
+            border-left: 3px solid #ff6fa8;
+            background: #ffffff09;
+            border-radius: 0 15px 15px 0
+        }
+
+        .gift {
+            font-size: 7rem;
+            cursor: pointer;
+            animation: bob 1.8s ease-in-out infinite;
+            display: inline-block
+        }
+
+        @keyframes bob {
+            50% {
+                transform: translateY(-14px) rotate(2deg)
+            }
+        }
+
+        .cake {
+            font-size: 7rem;
+            margin: 20px
+        }
+
+        .heart {
+            position: fixed;
+            bottom: -30px;
+            font-size: 20px;
+            animation: floatUp linear forwards;
+            pointer-events: none;
+            z-index: 20
+        }
+
+        @keyframes floatUp {
+            to {
+                transform: translateY(-110vh) rotate(360deg);
+                opacity: 0
+            }
+        }
+
+        .confetti {
+            position: fixed;
+            width: 9px;
+            height: 14px;
+            top: -20px;
+            z-index: 30;
+            animation: fall 3s linear forwards;
+            pointer-events: none
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(110vh) rotate(720deg);
+                opacity: .9
+            }
+        }
+
+        .progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: #ffffff12;
+            z-index: 50
+        }
+
+        #bar {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, #ff4f91, #a56bff)
+        }
+
+        .music {
+            position: fixed;
+            right: 18px;
+            bottom: 18px;
+            z-index: 40;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 1px solid #ffffff33;
+            background: #ffffff18;
+            color: #fff;
+            cursor: pointer
+        }
+
+        footer {
+            padding: 35px;
+            text-align: center;
+            color: #ffffff70
+        }
+
+        .name {
+            color: #ffd1e2
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="progress">
+        <div id="bar"></div>
+    </div>
+    <button class="music" id="musicBtn" title="Music">♫</button>
+
+    <section class="page" id="home">
+        <div class="glow g1"></div>
+        <div class="glow g2"></div>
+        <div class="card">
+            <div class="eyebrow">A little surprise for you</div>
+            <h1>Happy<br><span>Birthday!</span> 🎂</h1>
+            <p class="subtitle">
+                Today is not just another day. It is the day the world became a little brighter because you were born.
+            </p>
+            <button class="btn" onclick="go('letter')">Open Your Surprise 💌</button>
+        </div>
+    </section>
+
+    <section class="section hidden" id="letter">
+        <div class="card">
+            <div class="eyebrow">A message from my heart</div>
+            <h2>For <span class="name">Someone Special</span> ❤️</h2>
+            <p class="message typing" id="typing"></p>
+            <button class="btn" onclick="go('memories')">Continue →</button>
+        </div>
+    </section>
+
+    <section class="section hidden" id="memories">
+        <div class="card">
+            <div class="eyebrow">Little moments</div>
+            <h2>Our Memories ✨</h2>
+            <p class="subtitle">Replace the three boxes below with your favourite photos.</p>
+
+            <div class="photo-grid">
+                <div class="photo"><img src="20260328_011658-COLLAGE.jpg"
+                        alt="Two smiling young women standing close together outdoors in a green natural setting, looking toward the camera with warm, happy expressions and a bright cheerful mood."
+                        onerror="this.remove();this.parentElement.innerHTML='📷<br>photo1.jpg'"></div>
+                <div class="photo"><img src="20191127_141400.jpg"
+                        alt="Two smiling young women posing together outdoors in a bright natural environment, with greenery around them and a joyful, affectionate mood."
+                        onerror="this.remove();this.parentElement.innerHTML='📷<br>photo2.jpg'"></div>
+                <div class="photo"><img src="./IMG_20200221_114703.jpg"
+                        alt="Two smiling young women posing together outdoors in a bright natural environment, with greenery around them and a joyful, affectionate mood."
+                        onerror="this.remove();this.parentElement.innerHTML='📷<br>photo3.jpg'"></div>
+            </div>
+
+            <div class="timeline">
+                <div class="memory"><b>That first smile</b><br>Some moments are small but stay with us forever.</div>
+                <div class="memory"><b>All the laughter</b><br>Thank you for making ordinary days feel special.</div>
+                <div class="memory"><b>Today</b><br>Today, we celebrate YOU. 🥳</div>
+            </div>
+
+            <button class="btn" onclick="go('gift')">There is one more thing 🎁</button>
+        </div>
+    </section>
+
+    <section class="section hidden" id="gift">
+        <div class="card">
+            <div class="eyebrow">Tap the gift</div>
+            <h2>Your surprise is waiting...</h2>
+            <div class="gift" onclick="openGift()">🎁</div>
+            <p id="giftText" class="message hidden">
+                Surprise! 🎉<br>
+                May this new year of your life bring you peace, happiness,
+                unforgettable adventures and everything your heart is quietly wishing for.
+            </p>
+            <button class="btn hidden" id="finalBtn" onclick="go('final')">One final wish ✨</button>
+        </div>
+    </section>
+
+    <section class="section hidden" id="final">
+        <div class="card">
+            <div class="eyebrow">Make a wish</div>
+            <div class="cake">🎂</div>
+            <h1>Happy Birthday,<br><span class="name">My Favourite Person</span> ❤️</h1>
+            <p class="message">
+                Keep smiling. Keep dreaming. Keep becoming the amazing person you are.
+                And may every chapter ahead be even more beautiful than the last.
+                <br><br><b>Happy Birthday! 🥂✨</b>
+            </p>
+            <button class="btn" onclick="celebrate()">Celebrate! 🎊</button>
+            <button class="btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">Replay ↻</button>
+        </div>
+    </section>
+
+    <footer>Made with ❤️ just for you</footer>
+
+    <!--
+  OPTIONAL MUSIC:
+  Put a music file named "birthday.mp3" in the same folder as this HTML.
+-->
+    <audio id="music" loop>
+        <source src="birthday.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        const sections = ["home", "letter", "memories", "gift", "final"];
+
+        function go(id) {
+            sections.forEach(s => {
+                const el = document.getElementById(s);
+                if (s === id) el.classList.remove("hidden");
+                else if (s !== "home") el.classList.add("hidden");
+            });
+            document.getElementById(id).scrollIntoView({ behavior: "smooth" });
+            if (id === "letter") startTyping();
+            if (id === "memories") burstHearts(8);
+        }
+
+        const message =
+            "On your birthday, I just want you to know how special you are. " +
+            "Thank you for every smile, every conversation, every little moment and every memory. " +
+            "I hope this year gives you countless reasons to smile, courage to chase your dreams, " +
+            "and people who remind you every day how loved and appreciated you are. ❤️";
+
+        let typed = false;
+        function startTyping() {
+            if (typed) return;
+            typed = true;
+            const box = document.getElementById("typing");
+            let i = 0;
+            const timer = setInterval(() => {
+                box.textContent = message.slice(0, i++);
+                if (i > message.length) clearInterval(timer);
+            }, 28);
+        }
+
+        function openGift() {
+            document.querySelector(".gift").textContent = "🎉";
+            document.getElementById("giftText").classList.remove("hidden");
+            document.getElementById("finalBtn").classList.remove("hidden");
+            confetti(90);
+            burstHearts(25);
+        }
+
+        function burstHearts(n) {
+            for (let i = 0; i < n; i++) {
+                const h = document.createElement("div");
+                h.className = "heart";
+                h.textContent = ["❤️", "💖", "💕", "💗", "✨"][Math.floor(Math.random() * 5)];
+                h.style.left = Math.random() * 100 + "vw";
+                h.style.animationDuration = (4 + Math.random() * 4) + "s";
+                h.style.fontSize = (15 + Math.random() * 22) + "px";
+                document.body.appendChild(h);
+                setTimeout(() => h.remove(), 8000);
+            }
+        }
+
+        function confetti(n) {
+            for (let i = 0; i < n; i++) {
+                const c = document.createElement("div");
+                c.className = "confetti";
+                c.style.left = Math.random() * 100 + "vw";
+                c.style.animationDelay = Math.random() * 1.5 + "s";
+                c.style.transform = `rotate(${Math.random() * 360}deg)`;
+                document.body.appendChild(c);
+                setTimeout(() => c.remove(), 5000);
+            }
+        }
+
+        function celebrate() {
+            confetti(180);
+            burstHearts(45);
+        }
+
+        window.addEventListener("scroll", () => {
+            const max = document.documentElement.scrollHeight - window.innerHeight;
+            document.getElementById("bar").style.width = (window.scrollY / max * 100) + "%";
+        });
+
+        const audio = document.getElementById("music");
+        const musicBtn = document.getElementById("musicBtn");
+        let playing = false;
+
+        musicBtn.addEventListener("click", () => {
+            if (playing) { audio.pause(); musicBtn.textContent = "♫"; }
+            else { audio.play().catch(() => { }); musicBtn.textContent = "❚❚"; }
+            playing = !playing;
+        });
+
+        /* Start with a small ambient heart effect */
+        setInterval(() => burstHearts(1), 1800);
+    </script>
+</body>
+
+</html>
